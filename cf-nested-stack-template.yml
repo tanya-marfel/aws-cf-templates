@@ -1,0 +1,11 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+    VPC:
+        Type: AWS::CloudFormation::Stack
+        Properties:
+            TemplateURL: cf-vpc-template.yml
+    EC2Instances:
+        Type: AWS::CloudFormation::Stack
+        DependsOn: VPC
+        Properties:
+            TemplateURL: cf-ec2-instance-template.yml

@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description:  This template creates EC2 Instance inside a public A subnet of Bison Network.
+Parameters:
+    InstanceType:
+        Type: String
+        Description: EC2 instance type
+        Default: t2.micro
+        AllowedValues:
+            - t2.micro
+    AMI:
+        Type: String
+        Default: ami-0474863011a7d1541
+        Description: The Linux AMI to use.
+Resources:
+    BisonPublicInstance1:
+        Type: 'AWS::EC2::Instance'
+        Properties:
+            InstanceType: !Ref InstanceType
+            ImageId: !Ref AMI
+            Tags: 
+                - Key: Name
+                  Value: BisonPublicInstanceA
+            SubnetId: !ImportValue BisonPublicSubnetA
+    BisonPublicInstance2:
+        Type: 'AWS::EC2::Instance'
+        Properties:
+            InstanceType: !Ref InstanceType
+            ImageId: !Ref AMI
+            Tags: 
+                - Key: Name
+                  Value: BisonPublicInstanceB
+            SubnetId: !ImportValue BisonPublicSubnetB
+    BisonPrivateInstance1:
+        Type: 'AWS::EC2::Instance'
+        Properties:
+            InstanceType: !Ref InstanceType
+            ImageId: !Ref AMI
+            Tags: 
+                - Key: Name
+                  Value: BisonPrivateInstanceA
+            SubnetId: !ImportValue BisonPrivateSubnetA
+    BisonPrivateInstance2:
+        Type: 'AWS::EC2::Instance'
+        Properties:
+            InstanceType: !Ref InstanceType
+            ImageId: !Ref AMI
+            Tags: 
+                - Key: Name
+                  Value: BisonPrivateInstanceB
+            SubnetId: !ImportValue BisonPrivateSubnetB
+    
+  
