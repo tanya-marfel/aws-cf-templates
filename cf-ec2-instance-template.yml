@@ -11,25 +11,33 @@ Parameters:
         Type: String
         Default: ami-0474863011a7d1541
         Description: The Linux AMI to use.
+    NetworkName:
+        Type: String
+        Description: Network name instances to be attached to
+        Default: Bison
 Resources:
-    BisonPublicInstance1:
+    PublicInstance1:
         Type: 'AWS::EC2::Instance'
         Properties:
             InstanceType: !Ref InstanceType
             ImageId: !Ref AMI
             Tags: 
                 - Key: Name
-                  Value: BisonPublicInstanceA
-            SubnetId: !ImportValue BisonPublicSubnetA
-    BisonPublicInstance2:
+                  Value: !Sub ${NetworkName}PublicInstanceA
+            SubnetId: 
+                Fn::ImportValue: 
+                    !Sub ${NetworkName}PublicSubnetA
+    PublicInstance2:
         Type: 'AWS::EC2::Instance'
         Properties:
             InstanceType: !Ref InstanceType
             ImageId: !Ref AMI
             Tags: 
                 - Key: Name
-                  Value: BisonPublicInstanceB
-            SubnetId: !ImportValue BisonPublicSubnetB
+                  Value: !Sub ${NetworkName}PublicInstanceB
+            SubnetId: 
+                Fn::ImportValue: 
+                    !Sub ${NetworkName}PublicSubnetB
     BisonPrivateInstance1:
         Type: 'AWS::EC2::Instance'
         Properties:
@@ -37,8 +45,10 @@ Resources:
             ImageId: !Ref AMI
             Tags: 
                 - Key: Name
-                  Value: BisonPrivateInstanceA
-            SubnetId: !ImportValue BisonPrivateSubnetA
+                  Value: !Sub ${NetworkName}PrivateInstanceA
+            SubnetId: 
+                Fn::ImportValue: 
+                    !Sub ${NetworkName}PrivateSubnetA
     BisonPrivateInstance2:
         Type: 'AWS::EC2::Instance'
         Properties:
@@ -46,7 +56,9 @@ Resources:
             ImageId: !Ref AMI
             Tags: 
                 - Key: Name
-                  Value: BisonPrivateInstanceB
-            SubnetId: !ImportValue BisonPrivateSubnetB
+                  Value: !Sub ${NetworkName}PrivateInstanceB
+            SubnetId: 
+                Fn::ImportValue: 
+                    !Sub ${NetworkName}PrivateSubnetB
     
   

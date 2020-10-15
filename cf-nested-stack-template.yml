@@ -1,11 +1,19 @@
 AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+    NetworkName:
+        Type: String
+        Default: Capybara
 Resources:
     VPC:
         Type: AWS::CloudFormation::Stack
         Properties:
             TemplateURL: cf-vpc-template.yml
+            Parameters: 
+                EnvironmentName: !Ref NetworkName
     EC2Instances:
         Type: AWS::CloudFormation::Stack
         DependsOn: VPC
         Properties:
             TemplateURL: cf-ec2-instance-template.yml
+            Parameters: 
+                NetworkName: !Ref NetworkName
