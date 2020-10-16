@@ -18,28 +18,28 @@ Resources:
                 !Sub ${NetworkName}Vpc
           ResourceType: VPC
           TrafficType: ALL
-          FlowLogRole:
+    FlowLogRole:
         Type: 'AWS::IAM::Role'
         Properties:
             RoleName: iamRoleFlowLogsToCloudWatchLogs
             AssumeRolePolicyDocument:
                 Version: '2012-10-17'
                 Statement:
-                - Sid: ''
-                  Effect: Allow
-                  Principal:
-                    Service: vpc-flow-logs.amazonaws.com
-                  Action: 'sts:AssumeRole'
+                    - Sid: ''
+                      Effect: Allow
+                      Principal:
+                        Service: vpc-flow-logs.amazonaws.com
+                      Action: 'sts:AssumeRole'
             Policies:
                 - PolicyName: allow-access-to-cw-logs
                   PolicyDocument:
                     Version: '2012-10-17'
                     Statement:
                         - Effect: Allow
-                        Action:
+                          Action:
                             - 'logs:CreateLogGroup'
                             - 'logs:CreateLogStream'
                             - 'logs:PutLogEvents'
                             - 'logs:DescribeLogGroups'
                             - 'logs:DescribeLogStreams'
-                        Resource: '*'
+                          Resource: '*'

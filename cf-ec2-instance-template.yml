@@ -8,7 +8,7 @@ Parameters:
         AllowedValues:
             - t2.micro
     AMI:
-        Type: String
+        Type: AWS::EC2::Image::Id
         Default: ami-0474863011a7d1541
         Description: The Linux AMI to use.
     NetworkName:
