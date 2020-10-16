@@ -10,7 +10,7 @@ Resources:
         Properties:
           DeliverLogsPermissionArn:
             'Fn::GetAtt':
-                - IamRoleForFlowLogs
+                - FlowLogRole
                 - Arn
           LogGroupName: FlowLogsGroup
           ResourceId: 
