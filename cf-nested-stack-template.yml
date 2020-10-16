@@ -17,3 +17,10 @@ Resources:
             TemplateURL: cf-ec2-instance-template.yml
             Parameters: 
                 NetworkName: !Ref NetworkName
+    FlowLogs:
+        Type: AWS::CloudFormation::Stack
+        DependsOn: VPC
+        Properties:
+            TemplateURL: cf-flow-logs-template.yml
+            Parameters: 
+                NetworkName: !Ref NetworkName

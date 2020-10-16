@@ -1,0 +1,45 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+    NetworkName:
+        Type: String
+        Description: Network name instances to be attached to
+        Default: Bison
+Resources:
+    VpcFlowLog:
+        Type: AWS::EC2::FlowLog
+        Properties:
+          DeliverLogsPermissionArn:
+            'Fn::GetAtt':
+                - IamRoleForFlowLogs
+                - Arn
+          LogGroupName: FlowLogsGroup
+          ResourceId: 
+            Fn::ImportValue:
+                !Sub ${NetworkName}Vpc
+          ResourceType: VPC
+          TrafficType: ALL
+          FlowLogRole:
+        Type: 'AWS::IAM::Role'
+        Properties:
+            RoleName: iamRoleFlowLogsToCloudWatchLogs
+            AssumeRolePolicyDocument:
+                Version: '2012-10-17'
+                Statement:
+                - Sid: ''
+                  Effect: Allow
+                  Principal:
+                    Service: vpc-flow-logs.amazonaws.com
+                  Action: 'sts:AssumeRole'
+            Policies:
+                - PolicyName: allow-access-to-cw-logs
+                  PolicyDocument:
+                    Version: '2012-10-17'
+                    Statement:
+                        - Effect: Allow
+                        Action:
+                            - 'logs:CreateLogGroup'
+                            - 'logs:CreateLogStream'
+                            - 'logs:PutLogEvents'
+                            - 'logs:DescribeLogGroups'
+                            - 'logs:DescribeLogStreams'
+                        Resource: '*'
